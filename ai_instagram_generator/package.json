@@ -1,0 +1,20 @@
+{
+  "name": "instagram-ai-generator",
+  "version": "1.0.0",
+  "description": "Générateur d'accroches Instagram basé sur l'IA",
+  "main": "public/index.html",
+  "scripts": {
+    "dev": "python -m http.server 3000 --directory public",
+    "build": "echo 'Build completed'"
+  },
+  "keywords": [
+    "instagram",
+    "ai",
+    "hooks",
+    "generator",
+    "social-media"
+  ],
+  "author": "Votre nom",
+  "license": "MIT",
+  "devDependencies": {}
+}

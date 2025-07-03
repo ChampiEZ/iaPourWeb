@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 Générateur d'Accroches Instagram IA</title>
+    <meta name="description" content="Générateur d'accroches Instagram basé sur l'IA. Créez des accroches captivantes pour vos posts Instagram en quelques clics !">
+    <meta name="keywords" content="Instagram, accroches, IA, générateur, marketing, social media">
+    <meta property="og:title" content="Générateur d'Accroches Instagram IA">
+    <meta property="og:description" content="Créez des accroches captivantes pour vos posts Instagram avec notre IA">
+    <meta property="og:type" content="website">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fff;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .input-hint {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+            font-family: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .results {
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 16px;
+            border: 1px solid #dee2e6;
+        }
+
+        .results h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hook-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hook-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .hook-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .hook-text {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.6;
+            padding-right: 80px;
+            font-weight: 500;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            opacity: 0;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .hook-item:hover .copy-btn {
+            opacity: 1;
+        }
+
+        .copy-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border: 1px solid #f5c6cb;
+            font-weight: 500;
+        }
+
+        .success-msg {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid #c3e6cb;
+            display: none;
+            font-weight: 500;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #eee;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .hook-item {
+                padding: 15px;
+            }
+            
+            .hook-text {
+                padding-right: 70px;
+                font-size: 1rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Générateur d'Accroches Instagram IA</h1>
+        <p class="subtitle">Créez des accroches captivantes pour vos posts Instagram en quelques clics !</p>
+        
+        <form id="hookForm">
+            <div class="form-group">
+                <label for="topic">🎯 Sujet (optionnel)</label>
+                <input type="text" id="topic" name="topic" placeholder="Ex: fitness, cuisine, voyage, business, beauté...">
+                <div class="input-hint">Laissez vide pour des sujets aléatoires</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="count">📊 Nombre d'accroches</label>
+                <input type="number" id="count" name="count" min="1" max="10" value="5">
+                <div class="input-hint">Entre 1 et 10 accroches</div>
+            </div>
+            
+            <button type="submit" class="btn" id="generateBtn">
+                ✨ Générer des Accroches
+            </button>
+        </form>
+        
+        <div id="results" class="results" style="display: none;">
+            <div class="stats" id="stats" style="display: none;">
+                <div class="stat-item">
+                    <div class="stat-value" id="hookCount">0</div>
+                    <div class="stat-label">Accroches</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="topicUsed">-</div>
+                    <div class="stat-label">Sujet</div>
+                </div>
+            </div>
+            
+            <h3>🎯 Vos Accroches Générées</h3>
+            <div id="hooksList"></div>
+        </div>
+        
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>✨ Génération en cours...</p>
+        </div>
+        
+        <div id="error" class="error" style="display: none;"></div>
+        <div id="successMsg" class="success-msg"></div>
+        
+        <div class="footer">
+            <p>Créé avec ❤️ et de l'IA • <a href="https://github.com" target="_blank">Code source</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('hookForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const topic = document.getElementById('topic').value;
+            const count = document.getElementById('count').value;
+            const generateBtn = document.getElementById('generateBtn');
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+            const error = document.getElementById('error');
+            const hooksList = document.getElementById('hooksList');
+            const stats = document.getElementById('stats');
+            const hookCount = document.getElementById('hookCount');
+            const topicUsed = document.getElementById('topicUsed');
+            
+            // Reset UI
+            results.style.display = 'none';
+            error.style.display = 'none';
+            loading.style.display = 'block';
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = '🔄 Génération...';
+            
+            try {
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        topic: topic,
+                        count: parseInt(count)
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Mettre à jour les stats
+                    hookCount.textContent = data.hooks.length;
+                    topicUsed.textContent = data.topic;
+                    stats.style.display = 'flex';
+                    
+                    // Afficher les résultats
+                    hooksList.innerHTML = '';
+                    data.hooks.forEach((hook, index) => {
+                        const hookItem = document.createElement('div');
+                        hookItem.className = 'hook-item';
+                        hookItem.innerHTML = `
+                            <div class="hook-text">${hook}</div>
+                            <button class="copy-btn" onclick="copyToClipboard('${hook.replace(/'/g, "\\'")}', this)">
+                                📋 Copier
+                            </button>
+                        `;
+                        
+                        // Animation d'apparition
+                        setTimeout(() => {
+                            hookItem.style.opacity = '0';
+                            hookItem.style.transform = 'translateY(20px)';
+                            hooksList.appendChild(hookItem);
+                            
+                            setTimeout(() => {
+                                hookItem.style.transition = 'all 0.5s ease';
+                                hookItem.style.opacity = '1';
+                                hookItem.style.transform = 'translateY(0)';
+                            }, 50);
+                        }, index * 100);
+                    });
+                    
+                    setTimeout(() => {
+                        results.style.display = 'block';
+                    }, 200);
+                } else {
+                    throw new Error(data.error || 'Erreur lors de la génération');
+                }
+            } catch (err) {
+                error.textContent = '❌ Erreur: ' + err.message;
+                error.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = '✨ Générer des Accroches';
+            }
+        });
+        
+        async function copyToClipboard(text, button) {
+            try {
+                await navigator.clipboard.writeText(text);
+                showCopySuccess(button);
+            } catch (err) {
+                // Fallback pour les anciens navigateurs
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showCopySuccess(button);
+                } catch (err) {
+                    console.error('Erreur lors de la copie:', err);
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+        
+        function showCopySuccess(button) {
+            const originalText = button.innerHTML;
+            button.innerHTML = '✅ Copié!';
+            button.style.background = '#28a745';
+            button.style.transform = 'translateY(-50%) scale(1.1)';
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.style.background = '#667eea';
+                button.style.transform = 'translateY(-50%) scale(1)';
+            }, 2000);
+        }
+        
+        // Animation au chargement
+        window.addEventListener('load', function() {
+            document.querySelector('.container').style.animation = 'fadeInUp 0.8s ease-out';
+        });
+    </script>
+    
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body>
+</html>
